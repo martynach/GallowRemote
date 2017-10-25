@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+#content {
+
+	width: 100%;
+	padding: 10px;
+	height: 100%;
+	text-align: justify;
+	
+}
+
+#top {
+
+	font-size: 28px;
+	padding: 20px;
+	border-bottom: 2px dotted #444444;
+
+}
+
+#middle {
+	padding: 20px;
+
+
+}
+
+#bottom {
+	padding: 20px;
+
+
+}
