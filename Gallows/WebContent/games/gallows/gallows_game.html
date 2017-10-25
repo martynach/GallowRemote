@@ -3,32 +3,18 @@
 <head>
 <meta charset="UTF-8">
 
-<title>Gallows game</title>
-
-<script src="GallowsGameScript.js"> </script>
-
-<link rel="stylesheet" href="gallows_game_style.css" />
-
-</head>
-
-<body>
-
-	<div id="container">
-
-		<div id="board">
+		<title>Gallows game</title>
+		<script src="GallowsGameScript.js" defer></script>
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=latin-ext" rel="stylesheet">
+		<link rel="stylesheet" href="gallows_game_style.css" />
+	</head>
+	<body>
+		<div class="container clearfix">
+			<div class="board js-visible-word"></div>
+			<div class="gibbet">
+				<img class="gibbet__image js-picture" src="img/gallow0.png" />
+			</div>
+			<div class="js-keyboard keyboard"></div>
 		</div>
-
-		<div id="gibbet">
-		<img class="js-picture" src="img/gallow0.png" />
-		</div>
-
-		<div class="js-keyboard keyboard" >
-		</div>
-
-		<div style="clear: both;"> </div>
-
-	</div>
-
-</body>
-
+	</body>
 </html>

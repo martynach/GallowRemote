@@ -1,99 +1,82 @@
-/**
- * 
- */
+const ALPHABET = 'AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŻŹ'.split('');
+const KEYBOARD_LETTER_CLASS = 'keyboard__letter';
+const NOT_FOUND_INDEX = -1;
 
-const KEYBOARD_CLASS = "js-keyboard";
-const PICTURE_CLASS = "js-picture";
+class GallowsGame {
+  constructor() {
+    this.keyboard = document.querySelector('.js-keyboard');
+    this.visibleWordContainer = document.querySelector('.js-visible-word');
+    this.picture = document.querySelector('.js-picture');
 
-var password = "DUPA JAŚ KARUZELA";
+    this.word = 'DUPA JAS KARUZELA';
+    this.visibleWord = this.word.replace(/[^ ]/g, '_');
+    this.misses = 0;
 
+    if (!(this.keyboard && this.visibleWordContainer && this.picture)) {
+      return;
+    }
 
-var tmpPassword = "";
+    this.setupKeyboard();
+    this.updateVisibleWord();
+  }
 
-for(i = 0; i < password.length; i++) {
-	if(password.charAt(i) == " ") {
-		tmpPassword += " ";
-	} else {
-		tmpPassword += "_";
-	}
-}
-
-function printPassword() {
-	document.getElementById("board").innerHTML = tmpPassword;
-}
-
-window.onload = startGame;
-
-function startGame() {
-	printPassword();
-	prepareKeyboard();
-}
-
-
-var alphabet = ["A", "Ą", "B", "C", "Ć", "D", "E", "Ę", "F", "G", "H", "I", "J", "K", "L", "Ł", "M", "N", "Ń", "O", "Ó", "P", "Q", "R", "S", "Ś", "T", "U", "V", "W", "X", "Y", "Z", "Ż", "Ź"];
-//alphabet = [...alphabet, ...alphabet]; dzika składnia :D
-//35 letters
-
-function prepareKeyboard() {
-
+  setupKeyboard() {
 	
-	//var sie bardzo rzadko uzywa: const albo let
-	//let i var rozny scope: doczytac
-	const keyboard = document.querySelector("." + KEYBOARD_CLASS);
-	if(!keyboard) {
-		return;
-	}
-	
-	//this nie byłby tym obiektem ktorego sie spodziewam;D
-	//var that = this; taki zapis zeby mozna bylo skorzystac z this wewnatrz funkcji
-//	alphabet.forEach(function() {
-//		
-//	})
-	
-	//arrow function (przyjmuje 3 argumenty): można odwoływac sie do obiektu this 
-	alphabet.forEach((alphabetElement) => {
-		const button = document.createElement("div");
-		button.textContent = alphabetElement;
-		button.className = "letter"; // className to odpowiednik class w htmlu (bo class to slowko zarezerwowane)
+//		ALPHABET.forEach(function() {
+		//this nie byłby tym obiektem ktorego sie spodziewam;D
+		//var that = this; taki zapis zeby mozna bylo skorzystac z this wewnatrz funkcji		
+//		})
+		
+		//arrow function (przyjmuje 3 argumenty): można odwoływac sie do obiektu this
+    ALPHABET.forEach(alphabetElement => {
+      const button = document.createElement('div');
+      button.textContent = alphabetElement;
+      button.className = KEYBOARD_LETTER_CLASS;// className to odpowiednik class w htmlu (bo class to slowko zarezerwowane)
 		// button.classList.add()
-		button.addEventListener("click", checkLetter);
-		
-		keyboard.appendChild(button);
-	});
+      button.addEventListener('click', () => this.checkLetter(alphabetElement));
+      
+      //inna opcja:
+      //button.addEventListener("click", checkLetter);
+      //wtedy funkcja checkLetter przyjmuje event:
+      //function checkLetter(event) {
+      //i w ten sposób trzeba by wydobyc literke:
+      //const letter = event.target.textContent;
+    		
 
-	
+      this.keyboard.appendChild(button);
+    });
+  }
+
+  updateVisibleWord() {
+    this.visibleWordContainer.textContent = this.visibleWord;
+  }
+
+  checkLetter(letter) {
+    const word = this.word;
+    if (word.includes(letter)) {
+    	//var sie bardzo rzadko uzywa: const albo let
+    	//let i var rozny scope: doczytac
+      for (
+        let i = word.indexOf(letter);
+        i != NOT_FOUND_INDEX;
+        i = word.indexOf(letter, i + 1)
+      ) {
+        this.visibleWord =
+          this.visibleWord.substring(0, i) +
+          letter +
+          this.visibleWord.substring(i + 1, word.length);
+      }
+
+      this.updateVisibleWord();
+    } else {
+      this.misses++;
+      //string interpolation
+      this.picture.src = `img/gallow${this.misses}.png`;
+    }
+  }
 }
 
-var number = 0;
-
-
-function checkLetter(event) {
-
-	const letter = event.target.textContent;
-	
-	
-	if(password.includes(letter)) {
-		
-		for(let i = password.indexOf(letter); i != -1; i = password.indexOf(letter, i + 1)) {
-			tmpPassword = tmpPassword.substring(0, i) + letter + tmpPassword.substring(i + 1, password.length);
-		}
-
-		printPassword();
-	} else {
-		number++;
-		//string interpolation joł:D
-		document.querySelector("." + PICTURE_CLASS).src = `img/gallow${number}.png`;
-	}
-}
-
-
-
-
-
-
-
-
-
+new GallowsGame();
 
 
 

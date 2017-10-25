@@ -1,81 +1,112 @@
 @charset "UTF-8";
 
 html {
-	box-sizing: border-box;
-	/*border defaultowo NIE wlicza sie do szerokosci i padding tez NIE a teraz sie wliczaja*/
+  box-sizing: border-box;
 }
 
 * {
-	box-sizing: inherit;
-	/*nie wszystkie lementy w css defaultowo dziedzicza */
+  box-sizing: inherit;
 }
 
-body
-{
-	background-color: #000000;
-	color: lightgray;
-	font-size: 24px;
+body {
+  background-color: #000000;
+  color: lightgray;
+  font-size: 15px;
+  margin: 0;
 }
 
-#container
-{
-	width: 900px;
-	margin-left: auto;
-	margin-right: auto;
-	
+@media (min-width: 1024px) {
+  body {
+    font-size: 24px;
+  }
 }
 
-#board
-{
-	width: 900px;
-	margin-top: 50px;
-	margin-bottom: 50px;
-	text-align: center;
-	font-size: 48px;
-	min-height: 60px;
-	letter-spacing: 4px;
+.clearfix:after {
+  content: '' !important;
+  display: block !important;
+  clear: both !important;
 }
 
-#gibbet
-{
-	float: left;
-	width: 450px;
-	text-align: center;
-	min-height: 400px;
-	
+.container {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.keyboard
-{
-	float: left;
-	width: 440px;
-	text-align: center;
-	min-height: 400px;
+.board {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+  font-family: 'Roboto Mono';
+  font-size: 48px;
+  letter-spacing: 4px;
 }
 
-.letter 
-{
-	width: 50px;
-	height: 50px;
-	text-align: center;
-	margin: 5px;
-	border: 3px solid gray;
-	color: gray;
-	float: left;
-	cursor: pointer;
-	border-radius: 15px;
+.gibbet {
+  float: left;
+  width: 100%;
+  text-align: center;
 }
 
-.letter:hover
-{
-	background-color: #2222222;
-	color: white;
-	border: 3px solid white;
+@media (min-width: 1024px) {
+  .gibbet {
+    width: 50%;
+  }
 }
 
-.letter:nth-child(14n + 8) {
-	margin-left: 25px;
+.gibbet__image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
+.keyboard {
+  float: left;
+  width: 100%;
+  text-align: center;
+  max-width: 295px; /* (30 + 10) * 7 - 5 + 20 */
+}
 
+@media (min-width: 1024px) {
+  .keyboard {
+    width: 50%;
+    max-width: 445px; /* (50 + 10) * 7 - 5 + 30 */
+  }
+}
 
+.keyboard__letter {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  border: 3px solid gray;
+  float: left;
+  cursor: pointer;
+  border-radius: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .keyboard__letter {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.keyboard__letter:hover {
+  background-color: #2222222;
+  color: white;
+  border: 3px solid white;
+}
+
+.keyboard__letter:nth-child(14n + 8) {
+  margin-left: 20px;
+}
+
+@media (min-width: 1024px) {
+  .keyboard__letter:nth-child(14n + 8) {
+    margin-left: 30px;
+  }
+}
