@@ -33,6 +33,22 @@ body {
   margin-right: auto;
 }
 
+.board-before-start {
+	color: #cccccc;
+	border: 4px solid #cccccc;
+	border-radius: 15px;
+	font-weight: bold;
+}
+
+
+.board-before-start:hover {
+	cursor:pointer;
+	border: 4px solid white;
+	color:white;
+	font-size: 52px;
+	letter-spacing: 5px;
+}
+
 .board {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -40,7 +56,10 @@ body {
   font-family: 'Roboto Mono';
   font-size: 48px;
   letter-spacing: 4px;
+  height: 80px;
 }
+
+
 
 .gibbet {
   float: left;
@@ -86,6 +105,30 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.keyboard__red-letter {
+	border: 3px solid #C00000;
+	background-color: #220000;
+	cursor: default;
+}
+
+.keyboard__red-letter:hover {
+	border: 3px solid #C00000;
+	background-color: #330000;
+	cursor: default;
+}
+
+.keyboard__green-letter {
+	border: 3px solid #00C000;
+	background-color: #002200;
+	cursor: default;
+}
+
+.keyboard__green-letter:hover {
+	border: 3px solid #00C000;
+	background-color: #002200;
+	cursor: default;
 }
 
 @media (min-width: 1024px) {
