@@ -124,6 +124,8 @@ class GallowsGame {
 	  message += "<h5>" + reason + "</h5>";
 	  
 	  scoreManager.takeLive();
+	  scoreManager.displayScore();
+	  
 	  if(scoreManager.getLives() > 0) {
 		  if(scoreManager.getLives() == 1) {
 			  message += "<p>Nie martw się, pozostało Ci jeszcze " + scoreManager.getLives() + " życie.";
@@ -132,17 +134,22 @@ class GallowsGame {
 		  }
 		  message += "<br />";
 		  message += '<div onclick="startNewRound();" class="continue-button" ><h3>KONTYNUUJ</h3></div>';
+		  
 
 	  } else {
 		  message += "<br />";
 		  message += "<h2>KONIEC GRY</h2>";
 		  
+		  let score = scoreManager.getScore();
+		  let level = scoreManager.getLevel();
+		  
+		  message += `<p>Zdobyte punkty: ${score}</p>`;
+		  message += `<p>Osiągniety poziom: ${level}</p>`;
+		  
 		  preparePageForNewGame();
 	  } 
 	  
 	  this.keyboard.innerHTML = message
-
-
   }
   
   gameWon() {
@@ -243,28 +250,30 @@ class ScoreManager {
 		this.level = level;
 		this.lives = lives;
 		
-		this.leftScores = this.scoresPerLevel - (this.score % (this.scoresPerLevel * this.level));
 		this.scoreContainer = document.querySelector(".js-score");
 		this.nextLevel = false;
 	}
-	
-	getScoreSummary() {
-		let summary = "<p>Twoje punkty: <b>" + this.score + "</b></p>";
 		
-		summary += "<p>Osiągnięty poziom: " + this.level + "</b></p>";
-		
-		summary += "<p>Pozostałe życia: <b>" + this.lives + "</b><p>";
-		
-		summary += "<p>Pozostało do kolejnego poziomu: <b>" + this.leftScores + "<b></p>";
-		
-		return summary;
-	}
-	
 	displayScore() {
+		let summary = "<p>Twoje punkty: <b>" + this.score + "</b></p>";
+		summary += "<p>Osiągnięty poziom: " + this.level + "</b></p>";
+		summary += "<p>Pozostałe życia: <b>" + this.lives + "</b><p>";	
 
+		let leftScores = this.scoresPerLevel - (this.score % this.scoresPerLevel);
+		summary += "<p>Pozostało do kolejnego poziomu: <b>" + leftScores + "<b></p>";
 		
-		this.scoreContainer.innerHTML = this.getScoreSummary();
+		this.scoreContainer.innerHTML = summary;
 	}
+	
+	getScore() {
+		return this.score;
+	}
+	
+	getLevel() {
+		return this.level;
+	}
+	
+	
 	
 	hideScore() {
 		this.scoreContainer.innerHTML = "";
@@ -272,10 +281,7 @@ class ScoreManager {
 	
 	addUsersScore(score) {
 		this.score += score;
-		this.updateLevel();
-		
-		this.leftScores = this.scoresPerLevel - (this.score % (this.scoresPerLevel * this.level));
-		
+		this.updateLevel();		
 	}
 	
 	updateLevel() {
@@ -311,7 +317,7 @@ function preparePageForNewGame() {
 function startGame() {
 	let element = document.querySelector(VISIBLE_WORD_CLASS);
 	element.classList.remove(BOARD_BEFORE_START_CLASS);
-	scoreManager = new ScoreManager(0, 10, 1, 3);
+	scoreManager = new ScoreManager(0, 10, 0, 3);
 	startNewRound();
 
 }
