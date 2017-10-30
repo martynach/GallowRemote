@@ -159,7 +159,6 @@ class GallowsGame {
 	  
 	  let score = 3 + Math.floor(timer.getSecondsLeft() / 6);
 	  scoreManager.addUsersScore(score);
-	  scoreManager.changeToNextLevel();
 	  scoreManager.displayScore();	  
   }
 }
@@ -282,32 +281,14 @@ class ScoreManager {
 	
 	addUsersScore(score) {
 		this.score += score;
+		this.updateLevel();
+		
 		this.leftScores = this.scoresPerLevel - (this.score % (this.scoresPerLevel * this.level));
-		if(this.leftScores == 0) {
-			this.nextLevel = true;
-		} else if(this.leftScores > this.scoresPerLevel) {
-			this.nextLevel = true;
-			this.leftScores -= this.scoresPerLevel;
-		}
+		
 	}
 	
-	/*
-	 * returns true when player has enough score to go to next level
-	 */
-	isNextLevelAvailable() {
-		return this.nextLevel;
-	}
-	
-	/*
-	 * returns true when changing to next level was possible
-	 */
-	changeToNextLevel() {
-		if(this.isNextLevelAvailable()) {
-			this.level++;
-			this.leftScores -= this.leftScores - this.scoresPerLevel;
-			return true;
-		}
-		return false;
+	updateLevel() {
+		this.level = Math.floor(this.score / this.scoresPerLevel);
 	}
 	
 	takeLive() {
