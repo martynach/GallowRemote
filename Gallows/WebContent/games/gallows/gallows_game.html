@@ -4,17 +4,29 @@
 <meta charset="UTF-8">
 
 		<title>Gallows game</title>
+	  	<!--  <script src="GallowsGameTimer.js" type="module"></script>-->
+		
+		<!-- <script src="GallowsGameScript.js" type="module" defer></script> -->
 		<script src="GallowsGameScript.js" defer></script>
-		<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=latin-ext" rel="stylesheet">
+		
+		
+		<!--  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=latin-ext" rel="stylesheet">-->
 		<link rel="stylesheet" href="gallows_game_style.css" />
+		
 	</head>
 	<body>
 		<div class="container clearfix">
-			<div class="board-before-start board js-visible-word" onclick="startGame()">START</div>
+			<div class="container__top">
+				<div class="board-before-start board js-visible-word" onclick="startGame()">START</div>
+				<div class="js-endgame endgame">Zakończ</div>
+				<div class="js-newgame newgame">Nowa gra</div>
+			</div>
 			<div class="gibbet">
 				<img class="gibbet__image js-picture" src="img/gallow0.png" />
 			</div>
 			<div class="js-keyboard keyboard"></div>
+			<div class="js-timer timer"></div>
+			<div class="js-score score"></div>
 		</div>
 	</body>
 </html>
