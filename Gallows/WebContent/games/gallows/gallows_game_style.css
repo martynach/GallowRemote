@@ -61,14 +61,24 @@ body {
   float:left;
 }
 
+/*
 .endgame {
 	width: 10%;
 	color: lightgray;
 	font-size: 15px;
 	float: left;
 }
+*/
 
-.endgame:hover {
+.endgame > a {
+	text-decoration: none;
+	width: 10%;
+	color: lightgray;
+	font-size: 15px;
+	float: left;
+}
+
+.endgame:hover > a{
 	width: 10%;
 	color: white;
 	text-decoration: underline;

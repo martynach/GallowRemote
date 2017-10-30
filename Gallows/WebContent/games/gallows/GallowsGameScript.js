@@ -131,14 +131,13 @@ class GallowsGame {
 			  message += "<p>Nie martw się, pozostały Ci jeszcze " + scoreManager.getLives() + " życia.";
 		  }
 		  message += "<br />";
-		  message += '<div onclick="startGame();" class="continue-button" ><h3>KONTYNUUJ</h3></div>';
+		  message += '<div onclick="startNewRound();" class="continue-button" ><h3>KONTYNUUJ</h3></div>';
 
 	  } else {
 		  message += "<br />";
 		  message += "<h2>KONIEC GRY</h2>";
-		  let element = document.querySelector(VISIBLE_WORD_CLASS);
-		  element.classList.add(BOARD_BEFORE_START_CLASS);
-		  element.textContent = "START";
+		  
+		  preparePageForNewGame();
 	  } 
 	  
 	  this.keyboard.innerHTML = message
@@ -150,7 +149,7 @@ class GallowsGame {
 	  let message = '<h4>Gratulacje!</h4>';
 	  message += '<p>Tym razem udało Ci się uniknąć śmierci...</p>';
 	  message += '<br />';
-	  message += '<div onclick="startGame();" class="continue-button" ><h3>KONTYNUUJ</h3></div>';
+	  message += '<div onclick="startNewRound();" class="continue-button" ><h3>KONTYNUUJ</h3></div>';
 	  
 	  this.keyboard.innerHTML = message;
 	  let element = document.querySelector(VISIBLE_WORD_CLASS);
@@ -161,21 +160,13 @@ class GallowsGame {
 	  scoreManager.addUsersScore(score);
 	  scoreManager.displayScore();	  
   }
+  
+  endGame() {
+	  this.keyboard.innerHTML = "";
+	  this.picture.src = 'img/gallow0.png';
+  }
 }
 
-
-function startGame() {
-	let element = document.querySelector(VISIBLE_WORD_CLASS);
-	element.classList.remove(BOARD_BEFORE_START_CLASS);
-	startNewRound();
-
-}
-
-function startNewRound() {
-	game = new GallowsGame();
-	timer = new GallowsGameTimer(2, 0);
-	scoreManager.displayScore();
-}
 
 //**************************************************************************************************
 //should be in another file but it needs to be served by server not from disc in order import to work
@@ -276,7 +267,7 @@ class ScoreManager {
 	}
 	
 	hideScore() {
-		scoreContainer.innerHTML = "";
+		this.scoreContainer.innerHTML = "";
 	}
 	
 	addUsersScore(score) {
@@ -303,8 +294,38 @@ class ScoreManager {
 /*GLOBAL VARIABLES*/
 let game;
 let timer;
-let scoreManager = new ScoreManager(0, 10, 1, 3);
+let scoreManager;
 
+function preparePageForNewGame() {
+	  let element = document.querySelector(VISIBLE_WORD_CLASS);
+	  element.classList.add(BOARD_BEFORE_START_CLASS);
+	  element.textContent = "START";
+	  
+	  game.endGame();
+	    
+	  timer.endTimer();
+	  
+	  scoreManager.hideScore();
+}
 
+function startGame() {
+	let element = document.querySelector(VISIBLE_WORD_CLASS);
+	element.classList.remove(BOARD_BEFORE_START_CLASS);
+	scoreManager = new ScoreManager(0, 10, 1, 3);
+	startNewRound();
 
+}
+
+function startNewRound() {
+	game = new GallowsGame();
+	timer = new GallowsGameTimer(2, 0);
+	scoreManager.displayScore();
+}
+
+function newGameButtonClicked() {
+	let newgame = confirm("Czy na pewno chcesz rozpocząć nową grę?")
+	if(newgame) {
+		preparePageForNewGame();
+	}
+}
 
